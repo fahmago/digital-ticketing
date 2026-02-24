@@ -1,7 +1,7 @@
 import '../models/ticket.dart';
 
 class TicketRepository {
-  final List<Ticket> _mockTickets = [
+  static final List<Ticket> _mockTickets = [
     Ticket(
       id: '1',
       title: 'Avatar Fire and Ash',
@@ -34,4 +34,12 @@ class TicketRepository {
       return null;
     }
   }
+
+  Future<List<Ticket>> searchTickets(String query) async {
+  await Future.delayed(const Duration(milliseconds: 500));
+  return _mockTickets.where((ticket) {
+    return ticket.title.toLowerCase().contains(query.toLowerCase());
+  }).toList();
 }
+}
+

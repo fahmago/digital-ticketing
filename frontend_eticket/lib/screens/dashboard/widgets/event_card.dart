@@ -13,11 +13,17 @@ class EventCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 150,
-            width: double.infinity,
-            color: Colors.blueGrey,
-            child: Image.network(ticket.imageUrl, fit: BoxFit.cover),
+          ClipRRect(
+            child: Hero(
+              tag: 'ticket-image-${ticket.id}',
+              child: Image.network(
+                ticket.imageUrl,
+                fit: BoxFit.cover,
+                height: 150,
+                width: double.infinity,
+                color: Colors.blueGrey,
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),

@@ -45,23 +45,53 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ],
         ),
-        body: BlocBuilder<TicketBloc, TicketState>(
-          builder: (context, state) {
-            if (state is TicketLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is TicketError) {
-              return Center(child: Text(state.message));
-            } else if (state is TicketLoaded) {
-              return ListView.builder(
-                padding: const EdgeInsets.all(16),
-                itemCount: state.tickets.length,
-                itemBuilder: (context, index) {
-                  return EventCard(ticket: state.tickets[index]);
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                decoration: const InputDecoration(
+                  labelText: 'Cari tiket ..',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (value) {
+                  context.read<TicketBloc>().add(SearchTickets(value));
                 },
-              );
-            }
-            return const Center(child: Text('No tickets available'));
-          },
+              ),
+            ),
+
+            Expanded(
+              child: BlocBuilder<TicketBloc, TicketState>(
+                builder: (context, state) {
+                  if (state is TicketLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is TicketError) {
+                    return Center(child: Text(state.message));
+                  } else if (state is TicketLoaded) {
+                    return ListView.builder(
+                      padding: const EdgeInsets.all(16),
+                      itemCount: state.tickets.length,
+                      itemBuilder: (context, index) {
+                        final ticket = state.tickets[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/ticket-detail',
+                              arguments: ticket,
+                            );
+                          },
+                          child: EventCard(ticket: ticket),
+                        );
+                      },
+                    );
+                  }
+                  return const Center(child: Text('No tickets available'));
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

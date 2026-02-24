@@ -5,6 +5,7 @@ import 'package:frontend_eticket/blocs/auth_event.dart';
 import 'package:frontend_eticket/blocs/auth_state.dart';
 import 'package:frontend_eticket/screens/auth/login_screen.dart';
 import 'package:frontend_eticket/screens/auth/register_screen.dart';
+import 'package:frontend_eticket/screens/dashboard/ticket_detail.screen.dart';
 import 'package:frontend_eticket/screens/dashboard_screen.dart';
 // import 'bloc/auth_bloc.dart';
 // import 'bloc/auth_event.dart';
@@ -28,6 +29,7 @@ class ETicketingApp extends StatelessWidget {
           '/login': (context) => const LoginScreen(),
           '/register': (context) => const RegisterScreen(),
           '/dashboard': (context) => const DashboardScreen(),
+          '/ticket-detail': (context) => const TicketDetailScreen(),
         },
       ),
     );
